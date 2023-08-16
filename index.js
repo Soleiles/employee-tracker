@@ -55,3 +55,44 @@ async function showTable(data) {
         }
     ]);
 }
+
+const menu = async function () {
+    const menuList = await inquirer.prompt([
+        {
+            message: "What would you like to do?",
+            type: "list",
+            name: "options",
+            choices: [
+                "View All Employees",
+                "Add Employee",
+                "Update Employee Role",
+                "View All Roles",
+                "Add Role",
+                "View All Departments",
+                "Add Department"
+            ]
+        }
+    ])
+    if (menuList.options === "View All Employees") {
+        await viewEmployees();
+        await menu();
+    } else if (menuList.options === "Add Employee") {
+        await addEmployee();
+        await menu();
+    } else if (menuList.options === "Update Employee Role") {
+        await updateEmployee();
+        await menu();
+    } else if (menuList.options === "View All Roles") {
+        await viewRoles();
+        await menu();
+    } else if (menuList.options === "Add Role") {
+        await addRole();
+        await menu();
+    } else if (menuList.options === "View All Departments") {
+        await viewDepartments();
+        await menu();
+    } else {
+        await addDeparment();
+        await menu();
+    } 
+};
