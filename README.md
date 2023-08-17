@@ -4,7 +4,7 @@
 
 ## Description
 
-In this assignment, we are introduced to the database system MySQL and use it to create tables that can store and update data. In this particular project, we used the database system to view and manage employee's.
+In this assignment, we are introduced to the database system MySQL and use it to create tables that can store and update data. In this particular project, we used the database system to view and manage employees.
 
 ## Installation
 
@@ -14,7 +14,7 @@ In this assignment, we are introduced to the database system MySQL and use it to
 
 The following packages were installed via terminal:
 
-- `npm i inquirer` allows interaction with the database
+- `npm i inquirer@8.2.4` allows interaction with the database
 - `npm i mysql2` allows connection to the MySQL database
 - `npm i figlet` renders the visual title of the app
 - `npm i table` produces a visualized table for data
