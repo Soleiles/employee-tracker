@@ -42,12 +42,12 @@ mysql.createConnection(
 });
 
 async function showTable(data) {
-    let table = [];
+    let tableData = [];
     tableData = [
         Object.keys(data[0]), 
         ...data.map(val => Object.values(val))
     ];
-    const answers = await inquirer.createPromptModule([
+    const answers = await inquirer.prompt([
         {
             message: "\n" + table(tableData, config),
             type: "input",
@@ -104,7 +104,7 @@ const viewEmployees = async function () {
     showTable(dbData);
 };
 
-// Add Employee Function
+// // Add Employee Function
 const addEmployee = async function () {
     const roleResults = await db.query("SELECT * FROM role");
     const employeeResults = await db.query("SELECT * FROM employee");
@@ -154,7 +154,7 @@ const addEmployee = async function () {
         }
     ])
 
-    for (let role of dbData) {
+    for (let role of roleData) {
         if (roleAssign.role === role.title) {
             employeeData.role_id = role.id;
         }
@@ -176,6 +176,17 @@ const addEmployee = async function () {
 };
 
 // Update Employee Role Function
+const updateRole = async function () {
+    const roleResults = await db.query("SELECT * FROM role");
+    const employeeResults = await db.query("SELECT * FROM employee");
+    const roleData = roleResults[0];
+    const employeeData = employeeResults[0];
+
+    const choiceData = dbData.map((row) => ({
+        name: row.first_name + " " + row.last_name,
+        value: row
+    }));
+}
 // View All Roles Function
 // Add Role Function
 // View All Departments Function
@@ -184,6 +195,7 @@ const init = async function () {
     figlet("Employee Tracker", async function (err, data) {
         if (err) {
             console.log("Error");
+            console.dir(err);
             return;
         }
         await inquirer.prompt([
