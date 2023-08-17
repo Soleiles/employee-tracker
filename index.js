@@ -235,6 +235,7 @@ const updateEmployee = async function () {
     WHERE id = ?`,
     [roleAssign, employeeID]);
 };
+
 // View All Roles Function
 const viewRoles = async function () {
     const results = await db.query("SELECT * FROM role");
@@ -243,6 +244,46 @@ const viewRoles = async function () {
 };
 
 // Add Role Function
+const addRole = async function () {
+    const roleData = await inquirer.prompt([
+        {
+            message: "What is the name of the role?",
+            type: "input",
+            name: "title"
+        },
+        {
+            message: "What is the salary of the role?",
+            type: "input",
+            name: "salary"
+        }
+    ]);
+    const results = await db.query("SELECT * FROM department");
+    const dbData = results[0];
+    const departmentChosen = await inquirer.prompt([
+        {
+            message: "Which department does the role belong to?",
+            type: "list",
+            choices: dbData,
+            name: "department"
+        }
+    ]);
+    
+    for (let department of dbData) {
+        if (departmentChosen.department === department.name) {
+            roleData.department_id = department.id;
+        }
+    }
+    await inquirer.prompt([
+        {
+            message: `Added ${roleData.title} to the database`,
+            type: "input",
+            name: "enter"
+        }
+    ]);
+    await showTable([roleData]);
+    await db.query("INSERT INTO role SET ?", roleData);
+};
+
 // View All Departments Function
 const viewDepartments = async function () {
     const results = await db.query("SELECT * FROM department");
