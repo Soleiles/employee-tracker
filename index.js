@@ -291,6 +291,26 @@ const viewDepartments = async function () {
     showTable(dbData);
 };
 
+// Add Department Function
+const addDeparment = async function () {
+    const departmentData = await inquirer.prompt([
+        {
+            message: "What is the name of the department?",
+            type: "input",
+            name: "name"
+        }
+    ]);
+    await inquirer.prompt([
+        {
+            message: `Added ${departmentData.name} to the database`,
+            type: "input",
+            name: "enter"
+        }
+    ]);
+    await showTable([departmentData]);
+    await db.query("INSERT INTO department SET ?", departmentData);
+};
+
 // Initializes application
 const init = async function () {
     figlet("Employee Tracker", async function (err, data) {
