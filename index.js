@@ -98,7 +98,83 @@ const menu = async function () {
 };
 
 // View All Employees Function
+const viewEmployees = async function () {
+    const results = await db.query("SELECT * FROM role");
+    const dbData = results[0];
+    showTable(dbData);
+};
+
 // Add Employee Function
+const addEmployee = async function () {
+    const roleResults = await db.query("SELECT * FROM role");
+    const employeeResults = await db.query("SELECT * FROM employee");
+    const roleData = roleResults[0];
+    const employeeData = employeeResults[0];
+    const roleArr = [];
+
+    for (let role of roleData) {
+        roleArr.push(role.title);
+    };
+
+    const employeeName = await inquirer.prompt([
+        {
+            message: "What is the employee's first name?",
+            type: "input",
+            name: "first_name"
+        },
+        {
+            message: "What is the employee's last name?",
+            type: "input",
+            name: "last_name"
+        }
+    ]);
+    const roleAssign = await inquirer.prompt([
+        {
+            message: "What is the employee's role?",
+            type: "list",
+            choices: roleArr,
+            name: "role"
+        }
+    ]);
+    const choiceData = employeeData.map((row) => ({
+        name: row.first_name + " " + row.last_name,
+        value: row
+    }))
+    choiceData.push({
+        name: "No manager",
+        value: { id: null }
+    });
+
+    const assignManager = await inquirer.prompt([
+        {
+            message: "Who is the employee's manager?",
+            type: "list",
+            choices: choiceData,
+            name: "manager"
+        }
+    ])
+
+    for (let role of dbData) {
+        if (roleAssign.role === role.title) {
+            employeeData.role_id = role.id;
+        }
+    }
+    employeeName.manager_id = assignManager.manager.id;
+
+    const firstName = employeeName.first_name;
+    const lastName = employeeName.last_name;
+
+    await inquirer.prompt([
+        {
+            message: `Added ${firstName} ${lastName} to the database`,
+            type: "input",
+            name: "enter"
+        }
+    ]);
+    await showTable([employeeName]);
+    await db.query("INSERT INTO employee SET ?", employeeName);
+};
+
 // Update Employee Role Function
 // View All Roles Function
 // Add Role Function
