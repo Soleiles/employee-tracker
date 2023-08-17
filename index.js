@@ -38,7 +38,7 @@ mysql.createConnection(
 ).then((connection) => {
     db = connection;
     console.log('Successfully connected to hr_db');
-    // init();
+    init();
 });
 
 async function showTable(data) {
@@ -96,3 +96,27 @@ const menu = async function () {
         await menu();
     } 
 };
+
+// View All Employees Function
+// Add Employee Function
+// Update Employee Role Function
+// View All Roles Function
+// Add Role Function
+// View All Departments Function
+
+const init = async function () {
+    figlet("Employee Tracker", async function (err, data) {
+        if (err) {
+            console.log("Error");
+            return;
+        }
+        await inquirer.prompt([
+            {
+                message: "\n" + data + "\nPress Enter to Continue",
+                type: "input",
+                name: "name"
+            }
+        ]);
+        await menu();
+    })
+}
