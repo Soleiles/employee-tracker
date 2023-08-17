@@ -23,6 +23,8 @@ The following packages were installed via terminal:
 
 Once the user types `node index`, they are prompted with the application
 
+https://github.com/Soleiles/employee-tracker/assets/126806504/79006a70-b76b-4ac2-91c1-9aaef71b398e
+
 ## License
 
 Refer to the license in the repository
