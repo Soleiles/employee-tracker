@@ -236,9 +236,21 @@ const updateEmployee = async function () {
     [roleAssign, employeeID]);
 };
 // View All Roles Function
+const viewRoles = async function () {
+    const results = await db.query("SELECT * FROM role");
+    const dbData = results[0];
+    showTable(dbData);
+};
+
 // Add Role Function
 // View All Departments Function
+const viewDepartments = async function () {
+    const results = await db.query("SELECT * FROM department");
+    const dbData = results[0];
+    showTable(dbData);
+};
 
+// Initializes application
 const init = async function () {
     figlet("Employee Tracker", async function (err, data) {
         if (err) {
